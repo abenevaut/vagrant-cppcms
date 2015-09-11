@@ -96,7 +96,7 @@ echo -e "\n--- Installing CPPCMS ---\n"
 
 cd /home/vagrant
 wget http://freefr.dl.sourceforge.net/project/cppcms/cppcms/1.0.5/cppcms-1.0.5.tar.bz2
-tar -xzvf cppcms-1.0.5.tar.bz2
+tar -xvf cppcms-1.0.5.tar.bz2
 rm cppcms-1.0.5.tar.bz2
 cd cppcms-1.0.5
 mkdir build
@@ -108,8 +108,9 @@ sudo make install
 
 echo -e "\n--- Installing CPPDB ---\n"
 
+cd /home/vagrant
 wget http://freefr.dl.sourceforge.net/project/cppcms/cppdb/0.3.1/cppdb-0.3.1.tar.bz2
-tar -xzvf cppdb-0.3.1.tar.bz2
+tar -xvf cppdb-0.3.1.tar.bz2
 rm cppdb-0.3.1.tar.bz2
 cd cppdb-0.3.1
 mkdir build
