@@ -121,7 +121,7 @@ rm cppcms-1.0.5.tar.bz2
 cd cppcms-1.0.5
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 make
 make test
 sudo make install
@@ -135,10 +135,29 @@ rm cppdb-0.3.1.tar.bz2
 cd cppdb-0.3.1
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 make
 make test
 sudo make install
+
+echo -e "\n--- Apache2 configuration --\n"
+cd /home/vagrant
+echo "VirtualHost *:80>
+  SCGIMount / 127.0.0.1:8080
+        ServerAdmin contact@cavaencoreparlerdebits.fr
+</VirtualHost>" > default-virtualhost
+sudo cp -f default-virtualhost /etc/apache2/sites-available/default
+
+sed -i 's/deb http://ftp.us.debian.org/debian/ wheezy main/deb http://ftp.us.debian.org/debian/ wheezy main non-free/' /etc/apt/source.list
+sed -i 's/deb-src http://ftp.us.debian.org/debian/ wheezy main/deb-src http://ftp.us.debian.org/debian/ wheezy main non-free/' /etc/apt/source.list
+sed -i 's/deb http://security.debian.org/ wheezy/updates main/deb http://security.debian.org/ wheezy/updates main non-free/' /etc/apt/source.list
+sed -i 's/deb-src http://security.debian.org/ wheezy/updates main/deb-src http://security.debian.org/ wheezy/updates main non-free/' /etc/apt/source.list
+eval $APTGET update
+eval $APTGET install libapache2-mod-scgi
+sudo a2enmod scgi
+sudo a2moden alias
+sudo service apache2 restart
+
 
 echo -e "\n--- Hello world! ---\n"
 
@@ -198,5 +217,4 @@ int main(int argc,char ** argv)
 
 c++ helloworld.cpp -lcppcms -o hello
 
-echo "export LD_LIBRARY_PATH=/usr/local/lib/"
 echo "./hello -c config.js"
