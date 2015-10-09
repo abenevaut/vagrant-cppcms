@@ -39,7 +39,7 @@ Your server is now running on !
 ### Apache2
 
 On the vagrant vm, a web server is installed. You can access it via 127.0.0.1:8080
-An "Hello World" cppcms website is available, and you need to run it to show something!
+An "Hello World" cppcms website is available - note that you have to run it to show something!
 
 	$> vagrant ssh
 	$> cd www
