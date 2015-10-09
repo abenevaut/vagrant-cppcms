@@ -155,7 +155,6 @@ sed -i 's/deb-src http://security.debian.org/ wheezy/updates main/deb-src http:/
 eval $APTGET update
 eval $APTGET install libapache2-mod-scgi
 sudo a2enmod scgi
-sudo a2moden alias
 sudo service apache2 restart
 
 
