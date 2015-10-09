@@ -1,11 +1,9 @@
 #!/bin/bash
 
+
 # DEBUG - Travis-ci
 TRAVIS=$1
 
-if [[ -z "${TRAVIS}" ]]; then
-  mkdir ~/www
-fi
 
 # Variables
 DBHOST=localhost
@@ -13,25 +11,47 @@ DBNAME=cppcms
 DBUSER=root
 DBPASSWD=vagrant
 
+
+if [[ -z "${TRAVIS}" ]]; then
+
+  echo -e "\n--- Processing server installation ---\n"
+
+  APTGET="sudo apt-get -y -q=9"
+
+  echo -e "\n--- Linux update ---\n"
+
+else
+
+  echo -e "\n--- Processing travis installation ---\n"
+
+  export DEBIAN_FRONTEND=noninteractive
+
+  mkdir ~/www
+
+  APTGET="sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confnew\""
+
+  echo -e "\n--- Travis linux update ---\n"
+
+fi
+
+
+
 echo -e "\n--- Processing server installation ---\n"
 
 echo -e "\n--- Linux update ---\n"
-sudo apt-get update -y -qq
-sudo apt-get upgrade -y -qq
+eval $APTGET update
+eval $APTGET upgrade
 
 echo -e "\n--- Binaries (git, build-essential, valgrind, gdb ...) ---\n"
-sudo apt-get install git build-essential gcc g++ gdb valgrind cmake libpcre3-dev zlib1g-dev libgcrypt11-dev libicu-dev python   -y -qq
+eval $APTGET install git build-essential gcc g++ gdb valgrind cmake libpcre3-dev zlib1g-dev libgcrypt11-dev libicu-dev python
 
 echo -e "\n--- MySQL ---\n"
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $DBPASSWD'
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $DBPASSWD'
-sudo apt-get install mysql-server -y -qq
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DBPASSWD"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DBPASSWD"
+eval $APTGET install mysql-server
 
 echo -e "\n--- Apache2 & PHP5 ---\n"
-sudo apt-get install apache2 php5-common libapache2-mod-php5 php5-cli php5-mysql -y -qq
-
-echo -e "\n--- Force dependencies ---\n"
-sudo apt-get install -f -y -qq
+eval $APTGET apache2-mpm-prefork apache2 php5-common libapache2-mod-php5 php5-cli php5-mysql
 
 echo -e "\n--- PHPMyAdmin ---\n"
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
@@ -39,7 +59,7 @@ sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm pass
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $DBPASSWD"
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $DBPASSWD"
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
-sudo apt-get install phpmyadmin -y -qq
+eval $APTGET install phpmyadmin
 
 echo -e "\n--- Setting up our MySQL user and db ---\n"
 mysql -uroot -p$DBPASSWD -e "CREATE DATABASE $DBNAME"
