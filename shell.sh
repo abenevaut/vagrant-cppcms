@@ -165,7 +165,8 @@ cd /home/vagrant/www
 
 echo "{
     \"service\" : {
-        \"api\" : \"http\",
+        \"api\" : \"scgi\",
+        \"ip\" : \"127.0.0.1\",
         \"port\" : 8080
     },
     \"http\" : {

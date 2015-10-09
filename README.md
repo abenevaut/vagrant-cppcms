@@ -52,7 +52,18 @@ All website content is available from you computer in : vagrant-cppcms/www *(1)
 #### technical
 
 We use Apache2 mod_scgi to pipe CPPCMS website to Apache2 output (port 80 on vagrant).
-All CPPCMS website have to use the port 8080 inside config.js file.
+All CPPCMS website have to use the "scgi" API and the port 8080 inside config.js file.
+
+	{
+	    "service" : {
+	        "api" : "scgi",
+	        "ip" : "127.0.0.1",
+	        "port" : 8080
+	    },
+	    "http" : {
+	        "script_names" : [ "/hello" ]
+	    }
+	}
 
 ## VM file sharing
 
