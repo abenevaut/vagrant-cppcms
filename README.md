@@ -61,7 +61,7 @@ All CPPCMS website have to use the port 8080 inside config.js file.
 ## CPPCMS & CPPDB
 
 At provisionning, the vagrant vm install CPPCMS (1.0.5) and CPPDB (0.3.1).
-All libraries are store at this path : /usr
+All libraries are stored at this path : /usr
 
 ## See also
 

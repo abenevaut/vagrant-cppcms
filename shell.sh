@@ -142,7 +142,7 @@ sudo make install
 
 echo -e "\n--- Apache2 configuration --\n"
 cd /home/vagrant
-echo "VirtualHost *:80>
+echo "<VirtualHost *:80>
   SCGIMount / 127.0.0.1:8080
         ServerAdmin contact@cavaencoreparlerdebits.fr
 </VirtualHost>" > default-virtualhost
