@@ -78,8 +78,3 @@ All libraries are stored at this path : /usr
 
 http://cppcms.com
 http://cppcms.com/wikipp/en/page/cppcms_1x_tut_hello
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/42antoine/vagrant-cppcms/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
