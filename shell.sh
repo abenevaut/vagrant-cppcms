@@ -1,9 +1,7 @@
 #!/bin/bash
 
-
-# DEBUG - Travis-ci
-TRAVIS=$1
-
+# DEBUG - CI
+CI=$1
 
 # Variables
 DBHOST=localhost
@@ -11,8 +9,7 @@ DBNAME=cppcms
 DBUSER=root
 DBPASSWD=vagrant
 
-
-if [[ -z "${TRAVIS}" ]]; then
+if [[ -z "${CI}" ]]; then
 
   echo -e "\n--- Processing server installation ---\n"
 
@@ -22,7 +19,7 @@ if [[ -z "${TRAVIS}" ]]; then
 
 else
 
-  echo -e "\n--- Processing travis installation ---\n"
+  echo -e "\n--- Processing CI installation ---\n"
 
   export DEBIAN_FRONTEND=noninteractive
 
@@ -30,7 +27,7 @@ else
 
   APTGET="sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confnew\""
 
-  echo -e "\n--- Travis linux update ---\n"
+  echo -e "\n--- CI linux update ---\n"
 
 fi
 
