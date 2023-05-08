@@ -1,4 +1,0 @@
-RunVagrant:
-  script:
-  - vagrant up
-  - vagrant destroy -f

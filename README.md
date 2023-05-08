@@ -20,7 +20,7 @@ Go to  https://www.virtualbox.org/wiki/Downloads and download / install vagrant 
 
 Clone this repository :
 
-	$> git clone https://github.com/42antoine/vagrant-cppcms.git
+	$> git clone https://github.com/abenevaut/vagrant-cppcms.git
 	$> cd vagrant-cppcms
 	$> vagrant up
 	$> vagrant ssh
@@ -71,7 +71,7 @@ All CPPCMS website have to use the "scgi" API and the port 8080 inside config.js
 
 ## CPPCMS & CPPDB
 
-At provisionning, the vagrant vm install CPPCMS (1.0.5) and CPPDB (0.3.1).
+At provisionning, the vagrant vm install CPPCMS (1.2.1) and CPPDB (0.3.1).
 All libraries are stored at this path : /usr
 
 ## See also

@@ -1,9 +1,7 @@
 #!/bin/bash
 
-
-# DEBUG - Travis-ci
-TRAVIS=$1
-
+# DEBUG - CI
+CI=$1
 
 # Variables
 DBHOST=localhost
@@ -11,8 +9,7 @@ DBNAME=cppcms
 DBUSER=root
 DBPASSWD=vagrant
 
-
-if [[ -z "${TRAVIS}" ]]; then
+if [[ -z "${CI}" ]]; then
 
   echo -e "\n--- Processing server installation ---\n"
 
@@ -22,7 +19,7 @@ if [[ -z "${TRAVIS}" ]]; then
 
 else
 
-  echo -e "\n--- Processing travis installation ---\n"
+  echo -e "\n--- Processing CI installation ---\n"
 
   export DEBIAN_FRONTEND=noninteractive
 
@@ -30,7 +27,7 @@ else
 
   APTGET="sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confnew\""
 
-  echo -e "\n--- Travis linux update ---\n"
+  echo -e "\n--- CI linux update ---\n"
 
 fi
 
@@ -115,10 +112,10 @@ echo "<?php phpinfo(); ?>" > /home/vagrant/www/info.php
 echo -e "\n--- Installing CPPCMS ---\n"
 
 cd /home/vagrant
-wget http://freefr.dl.sourceforge.net/project/cppcms/cppcms/1.0.5/cppcms-1.0.5.tar.bz2
-tar -xvf cppcms-1.0.5.tar.bz2
-rm cppcms-1.0.5.tar.bz2
-cd cppcms-1.0.5
+wget http://freefr.dl.sourceforge.net/project/cppcms/cppcms/1.2.1/cppcms-1.2.1.tar.bz2
+tar -xvf cppcms-1.2.1.tar.bz2
+rm cppcms-1.2.1.tar.bz2
+cd cppcms-1.2.1
 mkdir build
 cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr
@@ -144,14 +141,14 @@ echo -e "\n--- Apache2 configuration --\n"
 cd /home/vagrant
 echo "<VirtualHost *:80>
   SCGIMount / 127.0.0.1:8080
-        ServerAdmin contact@cavaencoreparlerdebits.fr
+        ServerAdmin contact@abenevaut.dev
 </VirtualHost>" > default-virtualhost
 sudo cp -f default-virtualhost /etc/apache2/sites-available/default
 
-sed -i 's/deb http://ftp.us.debian.org/debian/ wheezy main/deb http://ftp.us.debian.org/debian/ wheezy main non-free/' /etc/apt/source.list
-sed -i 's/deb-src http://ftp.us.debian.org/debian/ wheezy main/deb-src http://ftp.us.debian.org/debian/ wheezy main non-free/' /etc/apt/source.list
-sed -i 's/deb http://security.debian.org/ wheezy/updates main/deb http://security.debian.org/ wheezy/updates main non-free/' /etc/apt/source.list
-sed -i 's/deb-src http://security.debian.org/ wheezy/updates main/deb-src http://security.debian.org/ wheezy/updates main non-free/' /etc/apt/source.list
+sed -i 's/deb http://ftp.us.debian.org/debian/ bullseye main/deb http://ftp.us.debian.org/debian/ bullseye main non-free/' /etc/apt/source.list
+sed -i 's/deb-src http://ftp.us.debian.org/debian/ bullseye main/deb-src http://ftp.us.debian.org/debian/ bullseye main non-free/' /etc/apt/source.list
+sed -i 's/deb http://security.debian.org/ bullseye/updates main/deb http://security.debian.org/ bullseye/updates main non-free/' /etc/apt/source.list
+sed -i 's/deb-src http://security.debian.org/ bullseye/updates main/deb-src http://security.debian.org/ bullseye/updates main non-free/' /etc/apt/source.list
 eval $APTGET update
 eval $APTGET install libapache2-mod-scgi
 sudo a2enmod scgi
