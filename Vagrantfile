@@ -5,7 +5,10 @@
 Vagrant.configure(2) do |config|
 
   config.vm.box = "vagrant-debian-11.7.0-amd64"
-  config.vm.box_url = "http://pub.abenevaut.dev/debian-11.7.0-amd64/package.box"
+  config.vm.box_url = "https://pub.abenevaut.dev/debian-11.7.0-amd64/package.box"
+
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine.  
